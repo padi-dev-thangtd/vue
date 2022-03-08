@@ -1,8 +1,8 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const User = require("../models/user");
-const Invoice = require("../models/invoice");
-const Cart = require("../models/cart");
+const User = require('../models/user');
+const Invoice = require('../models/invoice');
+const Cart = require('../models/cart');
 
 const index = (req, res) => {
   try {
@@ -65,14 +65,14 @@ const removeUser = async (req, res, next) => {
 // Invoice
 const getInvoice = async (req, res, next) => {
   const { userId } = req.params;
-  const user = await User.findById(userId).populate("invoice");
+  const user = await User.findById(userId).populate('invoice');
   return res.status(200).json({ invoice: user.invoice });
 };
 
 const getInvoiceId = async (req, res, next) => {
   try {
     let { userId, invoiceId } = req.params;
-    const user = await User.findById(userId).populate("invoice");
+    const user = await User.findById(userId).populate('invoice');
     const invoice = await user.invoice.find((it) => {
       return it._id == invoiceId;
     });
@@ -84,15 +84,22 @@ const getInvoiceId = async (req, res, next) => {
 };
 
 const getInvoiceAll = async (req, res, next) => {
-  const userAll = await User.find().populate("invoice");
+  const userAll = await User.find().populate('invoice');
   let data = [];
   userAll.forEach((it) => {
+    const rest = {
+      email: it?.email,
+      name: it?.name,
+      userName: it?.userName,
+      address: it?.address,
+      phone: it?.phone,
+    };
     data.push(it.invoice);
   });
   let invoiceAll = data.reduce((arr, it) => {
     return arr.concat(it);
   }, []);
-  return res.status(200).json({ invoiceAll: invoiceAll });
+  return res.status(200).json({ invoiceAll: invoiceAll, userAll, data });
 };
 
 const newInvoice = async (req, res, next) => {
@@ -106,7 +113,7 @@ const newInvoice = async (req, res, next) => {
     await user.save();
     res.status(201).json({ invoice: newInvoice });
   } else {
-    console.log("data fail");
+    console.log('data fail');
   }
 };
 
@@ -125,7 +132,7 @@ const updateInvoice = async (req, res, next) => {
 // Cart
 const getCart = async (req, res, next) => {
   const { userId } = req.params;
-  const user = await User.findById(userId).populate("cart");
+  const user = await User.findById(userId).populate('cart');
   return res.status(200).json({ cart: user.cart });
 };
 
@@ -161,7 +168,7 @@ const removeCartId = async (req, res, next) => {
   try {
     const { userId, cartId } = req.params;
     const cart = await Cart.findById(cartId);
-    cart ? await cart.remove() : "";
+    cart ? await cart.remove() : '';
     const user = await User.findById(userId);
     await user.cart.pull(cartId);
     await user.save();

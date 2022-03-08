@@ -3,7 +3,7 @@
     <div class="font-20px txt-black-5 my-3">GIỎ HÀNG</div>
     <div class="cart">
       <section class="bg-white">
-        <div v-if="dataCart.length > 0" class="cart-container">
+        <div v-if="dataCart.length > 0" class="cart-container cart-container-css d-flex flex-column justify-content-between">
           <div v-for="cart in dataCart" :key="cart._id" class="d-flex align-items-center cart-container__content">
             <div class="ml-3 cart-icon" @click="handleDeleteCart(cart._id)">
               <b-icon icon="x-circle" scale="2" variant="danger" class="ml-3 cursor-pointer"></b-icon>
@@ -24,6 +24,7 @@
               </div>
             </div>
           </div>
+          <b-button class="btn-redirect" pill variant="outline-danger" @click="$router.push('/')">TIẾP TỤC MUA SẮM</b-button>
         </div>
         <div v-else class="text-center my-4 shopping">
           <a-icon type="shopping-cart" />
@@ -182,5 +183,12 @@ export default {
   .anticon-shopping-cart {
     font-size: 100px;
     color: #dcdcdc;
+  }
+  .cart-container-css{
+    height: 100%;
+  }
+  .btn-redirect{
+    max-width: 320px;
+    margin: 15px 20px;
   }
 </style>

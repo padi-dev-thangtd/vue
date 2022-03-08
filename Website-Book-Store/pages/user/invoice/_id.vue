@@ -36,6 +36,13 @@
     </div>
     <hr>
     <div class="mt-4 p-2 mb-3">
+      <p class="font-20px font-weight-bold mb-3">Thông tin cá nhân</p>
+      <p class="font-weight-bold mb-2">Họ và Tên: {{ userInfo ? userInfo.name : '' }}</p>
+      <p class="txt-black-3">Email: {{ userInfo ? userInfo.email : '' }}</p>
+      <p class="txt-black-3">(+84) {{ userInfo ? userInfo.phone : '' }}</p>
+      <p class="txt-black-3">{{ userInfo ? userInfo.address : '' }}</p>
+    </div>
+    <div class="mt-4 p-2 mb-3">
       <p class="font-20px font-weight-bold mb-3">Nội dung Nhận Hàng</p>
       <p class="txt-black-3">{{ invoiceInfo ? invoiceInfo.content : '' }}</p>
     </div>
@@ -96,6 +103,7 @@ export default {
     };
 
     this.userInfo = await this.$store.dispatch('users/getUserInfo', token);
+    console.log({userInfo: this.userInfo})
   },
 
   methods: {

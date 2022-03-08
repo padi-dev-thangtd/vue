@@ -3,6 +3,7 @@ export const URL_MENU = {
   PRODUCTS: ['/admin/products'],
   VOUCHER_ADMIN: ['/admin/vouchers'],
   ORDER_STATUS: ['/admin/orderStatus'],
+  ORDER_HISTORY:['/admin/orderHistory'],
   PROFILE: ['/user/profile'],
   INVOICE: ['/user/invoice'],
   NOTICE: ['/user/notice'],

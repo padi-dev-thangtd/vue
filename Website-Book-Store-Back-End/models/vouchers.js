@@ -2,24 +2,24 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const voucherSchema = new Schema({
-	nameVoucher: {
+  nameVoucher: {
     type: String,
   },
   logo: {
-    type: String
+    type: String,
   },
-	baseDate: {
-    type: String
+  baseDate: {
+    type: String,
   },
   use: {
-    type: Boolean
+    type: Boolean,
   },
   apply: {
-    type: String
+    type: String,
   },
   coin: {
-    type: Number
-  }
+    type: Number,
+  },
 });
 
 const voucher = mongoose.model('voucher', voucherSchema);

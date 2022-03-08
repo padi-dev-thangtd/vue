@@ -66,7 +66,7 @@
                   </div>
                   <div v-if="dataToken.permission == 'admin'">
                     <hr class="my-2"/>
-                    <div class="d-flex align-items-center" @click="$router.push('/checkout/orderStatus/')">
+                    <div class="d-flex align-items-center" @click="$router.push('/admin/orderStatus/')">
                       <a-icon type="dropbox" class="txt-black"/>
                       <p class="ml-2">Quản Lý Đơn Hàng</p>
                     </div>

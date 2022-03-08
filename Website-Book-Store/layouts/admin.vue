@@ -97,7 +97,26 @@
             >
               <div class="d-flex align-items-center sub-menu-item-height">
                 <a-icon type="account-book" />
-                <span>orders Status</span>
+                <span>Orders status</span>
+              </div>
+            </nuxt-link>
+          </a-sub-menu>
+          <a-sub-menu
+            key="5"
+            :class="
+              setMenuActive(URL_MENU.ORDER_HISTORY, path)
+                ? 'ant-menu-item-selected'
+                : ''
+            "
+          >
+            <nuxt-link
+              slot="title"
+              to="/admin/orderHistory"
+              class="txt-white font-16px"
+            >
+              <div class="d-flex align-items-center sub-menu-item-height">
+                <a-icon type="account-book" />
+                <span>Order history</span>
               </div>
             </nuxt-link>
           </a-sub-menu>
