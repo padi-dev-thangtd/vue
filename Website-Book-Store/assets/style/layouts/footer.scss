@@ -1,0 +1,54 @@
+.footer {
+  &__mail {
+    align-items: center;
+    justify-content: center;
+    height: 70px;
+    background-color: #c5ebfe;
+
+    .input-group {
+      width: 45%;
+    }
+
+    &-input {
+      & input:nth-child(1) {
+        width: 150px;
+      }
+      & input:nth-child(2) {
+        width: 250px;
+      }
+      & select:nth-child(3) {
+        width: 200px;
+      }
+
+      input:focus, select:focus {
+        box-shadow: none;
+        border: none;
+      }
+    }
+  }
+
+  &__main {
+    background-color: white;
+    padding: 40px;
+    justify-content: center;
+
+    &-left {
+      p {
+        color: #888888;
+        font-size: 14px;
+        text-decoration: none;
+        padding: 3px 0;
+        font-family: 'Montserrat-Light' !important;
+        &:hover {
+          color: black;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  &__bottom {
+    justify-content: space-around;
+    padding: 40px;
+  }
+}

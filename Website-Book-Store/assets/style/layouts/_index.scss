@@ -1,0 +1,142 @@
+.header {
+  width: 100%;
+  height: 70px;
+  position: relative;
+  background: rgb(1, 127, 255);
+  z-index: 10;
+
+  &-left {
+    width: 75%;
+    &__logo {
+      width: 15%;
+
+      &-category {
+        justify-content: flex-end;
+        flex-grow: 1;
+        &--logo-menu {
+          width: 32px;
+          height: 32px;
+        }
+      }
+    }
+
+    &__search {
+      width: 85%;
+
+      button {
+        background-color: rgb(13, 92, 182);
+        border: 1px solid rgb(13, 92, 182);
+      }
+    }
+  }
+
+  &-right {
+    &__user, &__cart {
+      position: relative;
+      cursor: pointer;
+
+      .regis:hover {
+        color: rgb(253, 216, 53);
+      }
+
+      &-noti {
+        position: absolute;
+        background-color: yellow;
+        align-items: center;
+        width: 20px;
+        justify-content: center;
+        display: flex;
+        border-radius: 20px;
+        left: 16px;
+        top: -2px;
+      }
+    }
+  }
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,.5);
+  z-index: 3;
+}
+
+.form-register {
+  width: 450px;
+  height: 435px;
+  background-color: white;
+  position: fixed;
+  top: calc((100% - 435px)/2);
+  left: calc((100% - 450px)/2);
+  z-index: 4;
+
+  &__menu {
+    border-bottom: 1px solid #F4F4F4;
+    &--register {
+      text-align: center;
+      font-weight: normal;
+      padding: 16px;
+      font-size: 14px;
+      &:hover {
+        color: white;
+        background: rgb(253, 216, 53);
+      }
+
+      &-bg {
+        color: white;
+        background: linear-gradient(90deg, rgba(255,152,0,1) 0%, rgba(247,105,93,1) 100%);
+      }
+    }
+  }
+
+  &__content {
+    overflow-y: scroll;
+    height: 368px;
+    padding: 0 32px 16px 32px;
+
+    &--email {
+      &-label {
+        padding: 4px;
+        margin-bottom: 5px;
+      }
+
+      &-input {
+        &:focus {
+          border: 1px solid #495057;
+          box-shadow: none;
+        }
+      }
+    }
+
+    &--btn-login {
+      width: 245px;
+      height: 36px;
+      border: none;
+      color: white;
+      font-size: 1.1em;
+      font-weight: 700;
+      background: linear-gradient(90deg, rgba(255,152,0,1) 0%, rgba(247,105,93,1) 100%);
+      border-radius: 20px;
+      &:hover {
+        background: rgb(253, 216, 53);
+      }
+    }
+
+    &--btn-cancel {
+      width: 245px;
+      height: 36px;
+      border: 1px solid #F39801;
+      color: #F39801;
+      font-size: 1.1em;
+      font-weight: 700;
+      background: white;
+      border-radius: 20px;
+      &:hover {
+        background: rgb(190, 184, 158);
+      }
+    }
+  }
+}

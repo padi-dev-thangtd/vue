@@ -1,0 +1,34 @@
+{
+  "name": "base-code",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.2",
+    "@nuxtjs/axios": "^5.12.2",
+    "@nuxtjs/bootstrap-vue": "^2.0.4",
+    "ant-design-vue": "^1.7.4",
+    "bootstrap": "^4.5.3",
+    "bootstrap-vue": "^2.21.2",
+    "cookie-parser": "^1.4.5",
+    "core-js": "^3.6.5",
+    "js-cookie": "^2.2.1",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.1",
+    "nuxt": "^2.14.6",
+    "nuxt-i18n": "^6.15.4",
+    "v-mask": "^2.2.4",
+    "vee-validate": "^3.4.5",
+    "vue-slick-carousel": "^1.0.6",
+    "vuex": "^3.5.1"
+  },
+  "devDependencies": {
+    "sass": "^1.28.0",
+    "sass-loader": "^10.0.5"
+  }
+}

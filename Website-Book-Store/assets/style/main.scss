@@ -1,0 +1,49 @@
+@import "../../node_modules//ant-design-vue/dist/antd";
+@import "../../node_modules/bootstrap/scss/functions";
+@import "./variables";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+@import "./reset";
+@import "./_custom.scss";
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #333;
+  background-color: #f4f4f4;
+}
+
+.container {
+  // margin-left: 75px;
+  // margin-right: 75px;
+  max-width: 1200px;
+}
+
+.icon-menu:before {
+  content: "\e900";
+}
+.icon-user:before {
+  content: "\e971";
+  cursor: pointer;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.flex-end {
+  justify-content: flex-end !important;
+}
+
+.flex-space-between {
+  justify-content: space-between;
+}
+
+.cursor-not {
+  cursor: not-allowed;
+}
