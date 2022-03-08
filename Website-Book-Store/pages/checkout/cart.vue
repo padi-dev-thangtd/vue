@@ -59,7 +59,7 @@
               <p class="font-20px font-weight-bold txt-origin">{{ totalMoney | numberWithCommas }}đ</p>
             </div>
             <div class="btn-payment text-center mt-3">
-              <b-button pill variant="danger" @click="handlePayment">THANH TOÁN</b-button>
+              <b-button :disabled="dataCart.length <= 0" pill variant="danger" @click="handlePayment">THANH TOÁN</b-button>
               <a-modal
                 title="Thông Báo"
                 :visible="visibleModal"

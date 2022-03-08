@@ -37,7 +37,6 @@ export default {
 
     async deleteUser(context, userId = null) {
       try {
-        console.log("vũe", userId);
         const resApi = await this.$axios.delete(`users/${userId}`);
         return resApi;
       } catch (err) {

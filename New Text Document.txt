@@ -4,9 +4,10 @@ Sửa:
 	3- Voucher có thêm giới hạn sử dụng,1 ng chỉ có thể dùng 1 lần voucher đó.
 4	4- sửa lại thông tin đơn hàng hiển thị chính xác:           
 5	5+ bỏ phần phương thức thanh toán, phương thức vận chuyển,mã quà tặng, thông tin khác.
-	6+ kiểm tra đơn hàng có hiện sản phẩm trong đơn hàng
+6	6+ kiểm tra đơn hàng có hiện sản phẩm trong đơn hàng
 	7- mã đơn hàng chuyển thành dạng ngắn, đơn giản hơn.
-	8- làm mới giỏ hàng mỗi khi thanh toán
+8	8- làm mới giỏ hàng mỗi khi thanh toán
 	9- trong giỏ hàng có thể thêm sửa số lượng sp
 	Thêm mới:
 	10- thêm phần thống kê đơn hàng(danh sách các đơn hàng) và hỗ trợ định dạng in có thể chọn số  đơn hàng để in (pdf).
+	

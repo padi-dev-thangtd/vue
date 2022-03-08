@@ -13,7 +13,6 @@ export default {
       state.listProducts = payload;
     },
     setListProductSearch(state, payload) {
-      console.log('aa', payload);
       state.listProductSearch = payload;
     },
     setProductInfo(state, payload) {

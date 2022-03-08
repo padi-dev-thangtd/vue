@@ -1,24 +1,28 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const invoiceSchema = new Schema({
   baseDate: {
-    type: String
+    type: String,
   },
   money: {
-    type: Number
+    type: Number,
   },
   content: {
-    type: String
+    type: String,
   },
   owner: {
     type: Schema.Types.ObjectId,
-    ref: 'user'
+    ref: "user",
   },
-	invoiceDetail: {
-		type: Array
-	}
+  invoiceDetail: {
+    type: Array,
+  },
+  index: {
+    type: Number,
+    default: 0,
+  },
 });
 
-const invoice = mongoose.model('invoice', invoiceSchema);
+const invoice = mongoose.model("invoice", invoiceSchema);
 module.exports = invoice;

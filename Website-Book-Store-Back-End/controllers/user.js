@@ -1,8 +1,8 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const User = require('../models/user');
-const Invoice = require('../models/invoice');
-const Cart = require('../models/cart');
+const User = require("../models/user");
+const Invoice = require("../models/invoice");
+const Cart = require("../models/cart");
 
 const index = (req, res) => {
   try {
@@ -65,14 +65,14 @@ const removeUser = async (req, res, next) => {
 // Invoice
 const getInvoice = async (req, res, next) => {
   const { userId } = req.params;
-  const user = await User.findById(userId).populate('invoice');
+  const user = await User.findById(userId).populate("invoice");
   return res.status(200).json({ invoice: user.invoice });
 };
 
 const getInvoiceId = async (req, res, next) => {
   try {
     let { userId, invoiceId } = req.params;
-    const user = await User.findById(userId).populate('invoice');
+    const user = await User.findById(userId).populate("invoice");
     const invoice = await user.invoice.find((it) => {
       return it._id == invoiceId;
     });
@@ -84,7 +84,7 @@ const getInvoiceId = async (req, res, next) => {
 };
 
 const getInvoiceAll = async (req, res, next) => {
-  const userAll = await User.find().populate('invoice');
+  const userAll = await User.find().populate("invoice");
   let data = [];
   userAll.forEach((it) => {
     data.push(it.invoice);
@@ -106,7 +106,7 @@ const newInvoice = async (req, res, next) => {
     await user.save();
     res.status(201).json({ invoice: newInvoice });
   } else {
-    console.log('data fail');
+    console.log("data fail");
   }
 };
 
@@ -125,7 +125,7 @@ const updateInvoice = async (req, res, next) => {
 // Cart
 const getCart = async (req, res, next) => {
   const { userId } = req.params;
-  const user = await User.findById(userId).populate('cart');
+  const user = await User.findById(userId).populate("cart");
   return res.status(200).json({ cart: user.cart });
 };
 
@@ -161,7 +161,7 @@ const removeCartId = async (req, res, next) => {
   try {
     const { userId, cartId } = req.params;
     const cart = await Cart.findById(cartId);
-    cart ? await cart.remove() : '';
+    cart ? await cart.remove() : "";
     const user = await User.findById(userId);
     await user.cart.pull(cartId);
     await user.save();
@@ -174,9 +174,15 @@ const removeCartId = async (req, res, next) => {
 const deleteAllCart = async (req, res, next) => {
   try {
     const { userId } = req.params;
+
+    //  owner: userId delete many
+    // const invoice = await Invoice.deleteMany({ owner: userId });
+    // update invoice in user schema
+    // remove owner cart
+
+    const cart = await Cart.deleteMany({ owner: userId });
     const user = await User.findById(userId);
     user.cart = [];
-    console.log({ user, userId });
     await user.save();
     return res.status(201).json({ success: true });
   } catch (e) {
