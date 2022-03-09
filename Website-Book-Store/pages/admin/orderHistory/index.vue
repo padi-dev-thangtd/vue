@@ -6,9 +6,10 @@
           >Orders</a-breadcrumb-item
         >
       </a-breadcrumb>
+      <div @click="printSection">In đơn hàng</div>
       <div class="card-container">
         <a-tabs type="card" @change="changeTab">
-          <a-tab-pane key="1" tab="Tất cả">
+          <a-tab-pane id="tab-1" key="1" tab="Tất cả">
             <div class="order-status__title order-status__title-all">
               <p class="font-16px">Mã đơn hàng</p>
               <p class="font-16px">Ngày đặt hàng</p>
@@ -54,7 +55,7 @@
             </section>
           </a-tab-pane>
 
-          <a-tab-pane key="2" tab="Chờ xác nhận">
+          <a-tab-pane id="tab-2" key="2" tab="Chờ xác nhận">
             <div v-if="!!dataConfirm.length">
               <div class="order-status__title">
                 <p class="font-16px">Mã đơn hàng</p>
@@ -117,7 +118,7 @@
             </div>
           </a-tab-pane>
 
-          <a-tab-pane key="3" tab="Lấy hàng">
+          <a-tab-pane id="tab-3" key="3" tab="Lấy hàng">
             <div v-if="!!dataTransport.length">
               <div class="order-status__title">
                 <p class="font-16px">Mã đơn hàng</p>
@@ -180,7 +181,7 @@
             </div>
           </a-tab-pane>
 
-          <a-tab-pane key="4" tab="Giao hoàn thành">
+          <a-tab-pane id="tab-4" key="4" tab="Giao hoàn thành">
             <div v-if="!!dataComplete.length">
               <div class="order-status__title">
                 <p class="font-16px">Mã đơn hàng</p>
@@ -243,7 +244,7 @@
             </div>
           </a-tab-pane>
 
-          <a-tab-pane key="5" tab="Hoàn thành">
+          <a-tab-pane id="tab-5" key="5" tab="Hoàn thành">
             <div v-if="!!dataComplete1.length">
               <div class="order-status__title">
                 <p class="font-16px">Mã đơn hàng</p>
@@ -294,7 +295,7 @@
             </div>
           </a-tab-pane>
 
-          <a-tab-pane key="6" tab="Đã hủy">
+          <a-tab-pane id="tab-5" key="6" tab="Đã hủy">
             <div v-if="!!dataCancel.length">
               <div class="order-status__title">
                 <p class="font-16px">Mã đơn hàng</p>
@@ -369,6 +370,7 @@
 <script>
 import moment from "moment";
 import { mapActions } from "vuex";
+import VueHtmlToPaper from "vue-html-to-paper";
 export default {
   layout: "admin",
   data() {
@@ -376,6 +378,7 @@ export default {
       keyTab: "1",
       statusConfirm: "0",
       dataInvoiceAll: null,
+      dataInvoiceAllResponse: null,
       dataConfirm: [],
       dataTransport: [],
       dataComplete: [],
@@ -387,7 +390,29 @@ export default {
     };
   },
   async created() {
-    this.dataInvoiceAll = await this.$store.dispatch("users/getInvoiceAll");
+    // this.dataInvoiceAll = await this.$store.dispatch("users/getInvoiceAll");
+    // getInvoiceAllResponse
+    this.dataInvoiceAllResponse = await this.$store.dispatch(
+      "users/getInvoiceAllResponse"
+    );
+    const dataUsers = this.dataInvoiceAllResponse.userAll;
+    const newDataUsers = dataUsers
+      .map(user => {
+        const invoice = user.invoice.map(item => {
+          return {
+            ...item,
+            address: user?.address,
+            email: user?.email,
+            name: user?.name,
+            phone: user?.phone,
+            userName: user?.userName
+          };
+        });
+        return invoice;
+      })
+      .flat();
+    this.dataInvoiceAll = newDataUsers;
+    console.log({ dataInvoiceAll: this.dataInvoiceAll });
 
     this.dataConfirm = this.dataInvoiceAll.filter(it => {
       return !it.invoiceDetail.length;
@@ -410,6 +435,19 @@ export default {
       getInvoiceId: "users/getInvoiceId",
       updateInvoice: "users/updateInvoice"
     }),
+    printSection() {
+      // this.$htmlToPaper("tab-" + this.keyTab);
+      VueHtmlToPaper('tab-'+1)
+    },
+
+    handlePrint() {
+      const keyTab = this.keyTab;
+      const printContents = document.getElementById("tab-" + keyTab).innerHTML;
+      const originalContents = document.body.innerHTML;
+      document.body.innerHTML = printContents;
+      window.print();
+      document.body.innerHTML = originalContents;
+    },
     handleStatus(invoice) {
       if (_.isEmpty(invoice.invoiceDetail)) {
         return "Chờ xác nhận";
@@ -483,7 +521,26 @@ export default {
 
     async handleOk() {
       await this.updateInvoice(this.dataConfirmRequest);
-      this.dataInvoiceAll = await this.$store.dispatch("users/getInvoiceAll");
+      this.dataInvoiceAllResponse = await this.$store.dispatch(
+        "users/getInvoiceAllResponse"
+      );
+      const dataUsers = this.dataInvoiceAllResponse.userAll;
+      const newDataUsers = dataUsers
+        .map(user => {
+          const invoice = user.invoice.map(item => {
+            return {
+              ...item,
+              address: user?.address,
+              email: user?.email,
+              name: user?.name,
+              phone: user?.phone,
+              userName: user?.userName
+            };
+          });
+          return invoice;
+        })
+        .flat();
+      this.dataInvoiceAll = newDataUsers;
       this.dataConfirm = this.dataInvoiceAll.filter(it => {
         return !it.invoiceDetail.length;
       });
@@ -512,6 +569,7 @@ export default {
     },
     changeTab(key) {
       this.keyTab = key;
+      console.log({ key });
     }
   }
 };

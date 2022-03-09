@@ -149,6 +149,15 @@ export default {
       }
     },
 
+    async getInvoiceAllResponse(context, params) {
+      try {
+        const resApi = await this.$axios.get("users/invoice/all");
+        return resApi;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
     async addInvoice(context, params = null) {
       try {
         const resApi = await this.$axios.post(
