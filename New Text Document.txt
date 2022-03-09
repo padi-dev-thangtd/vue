@@ -5,8 +5,20 @@ Sửa:
 4	4- sửa lại thông tin đơn hàng hiển thị chính xác:
 5	5+ bỏ phần phương thức thanh toán, phương thức vận chuyển,mã quà tặng, thông tin khác.
 6	6+ kiểm tra đơn hàng có hiện sản phẩm trong đơn hàng
-	7- mã đơn hàng chuyển thành dạng ngắn, đơn giản hơn.
+7	7- mã đơn hàng chuyển thành dạng ngắn, đơn giản hơn.
 8	8- làm mới giỏ hàng mỗi khi thanh toán
-	9- trong giỏ hàng có thể thêm sửa số lượng sp
+9	9- trong giỏ hàng có thể thêm sửa số lượng sp
 	Thêm mới:
-	10- thêm phần thống kê đơn hàng(danh sách các đơn hàng) và hỗ trợ định dạng in có thể chọn số  đơn hàng để in (pdf).
+10	10- thêm phần thống kê đơn hàng(danh sách các đơn hàng) và hỗ trợ định dạng in có thể chọn số  đơn hàng để in (pdf).
+
+	11 : - product thay ảnh
+	12 : - số lượng voucher  - update voucher.
+	13 : Sửa thông tin đơn hàng -> Tên user
+	14 : ấn vào tông tin đơn àng trong order status -> hiển thị ở trong trang quản trị
+	15 : Thông tin đơn hàng -> Điền thông tin
+	16: Mình là admin thì k mua bán được
+	17: ADmin : menu :  -Thông tin tài khoản, quarnlys hệ thống admin, đăng xuất
+	18: Trang chủ -> hiển thị lọc theo thể loại
+	19 : - Thống kê doanh thu
+
+

@@ -287,23 +287,28 @@ export default {
     let dataLogin = process.browser
       ? JSON.parse(localStorage.getItem("data_login"))
       : "";
+    const userIdOrder = this.$route.query.userId;
     this.dataUser = await this.$store.dispatch(
       "users/getUserInfo",
       dataLogin.token
     );
-    if (this.dataUser) {
-      this.form = {
-        name: this.dataUser.name,
-        phone: this.dataUser.phone ? `0${this.dataUser.phone}` : "",
-        address: this.dataUser.address,
-        email: this.dataUser.email
-      };
-    }
 
-    this.dataCart = await this.$store.dispatch(
-      "users/getCart",
+    const response = await this.$store.dispatch(
+      "users/getCartApi",
       dataLogin.token
     );
+    this.dataCart = response.cart;
+    console.log(this.dataCart)
+    const userOrder = response.user;
+    if (userOrder) {
+      this.form = {
+        name: userOrder.name,
+        phone: userOrder.phone ? `0${userOrder.phone}` : "",
+        address: userOrder.address,
+        email: userOrder.email,
+        permission: userOrder.permission
+      };
+    }
 
     if (this.dataCart.length == 1) {
       this.totalMoneyBook = this.dataCart[0].price * this.dataCart[0].remain;

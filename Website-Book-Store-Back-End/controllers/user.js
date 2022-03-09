@@ -137,7 +137,7 @@ const updateInvoice = async (req, res, next) => {
 const getCart = async (req, res, next) => {
   const { userId } = req.params;
   const user = await User.findById(userId).populate('cart');
-  return res.status(200).json({ cart: user.cart });
+  return res.status(200).json({ cart: user.cart, user });
 };
 
 const newCart = async (req, res, next) => {

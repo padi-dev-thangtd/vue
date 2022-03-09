@@ -15,7 +15,7 @@
               <p class="font-16px">Ngày đặt hàng</p>
               <p class="font-16px">Tổng tiền</p>
               <p class="font-16px">Trạng thái đơn hàng</p>
-              <p class="font-16px">Thông tin đơn hàng</p>
+              <p class="font-16px">Tên người đặt</p>
             </div>
             <section class="bg-white cart-user">
               <div
@@ -40,16 +40,9 @@
                   </p>
                 </div>
                 <div>
-                  <a-button
-                    type="primary"
-                    @click="$router.push('/checkout/payment/')"
-                  >
-                    <nuxt-link
-                      :to="{ path: '/checkout/payment/', hash: 'info' }"
-                    >
-                      Thông tin đơn hàng
-                    </nuxt-link>
-                  </a-button>
+                  <div class="txt-primary" style="color:#007bff">
+                    {{ invoice.name }}
+                  </div>
                 </div>
               </div>
             </section>
@@ -85,7 +78,10 @@
                   <div>
                     <a-button type="yellow">
                       <nuxt-link
-                        :to="{ path: '/checkout/payment/', hash: 'info' }"
+                        :to="{
+                          path: '/checkout/payment/',
+                          hash: 'info',
+                        }"
                       >
                         Thông tin đơn hàng
                       </nuxt-link>
@@ -437,9 +433,9 @@ export default {
       updateInvoice: "users/updateInvoice"
     }),
 
-    async printSection () {
+    async printSection() {
       // Pass the element id here
-      await this.$htmlToPaper('tab-'+this.keyTab);
+      await this.$htmlToPaper("tab-" + this.keyTab);
     },
 
     handlePrint() {
@@ -449,9 +445,8 @@ export default {
       document.body.innerHTML = printContents;
       window.print();
       document.body.innerHTML = this.HTML;
-      this.$router.push('/admin/orderHistory');
+      this.$router.push("/admin/orderHistory");
       window.location.reload();
-
     },
     handleStatus(invoice) {
       if (_.isEmpty(invoice.invoiceDetail)) {

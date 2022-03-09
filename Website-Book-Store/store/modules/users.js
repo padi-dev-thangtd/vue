@@ -72,6 +72,15 @@ export default {
       }
     },
 
+    async getCartApi(context, params) {
+      try {
+        const resApi = await this.$axios.get(`users/${params}/cart`);
+        return resApi;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
     async addCart(context, params = null) {
       try {
         const resApi = await this.$axios.post(
