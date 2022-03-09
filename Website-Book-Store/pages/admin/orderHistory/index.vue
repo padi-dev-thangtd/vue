@@ -24,7 +24,7 @@
                 :key="invoice._id"
               >
                 <p class="txt-origin font-16px font-weight-bold">
-                  {{ invoice._id }}
+                  {{ invoice.uid }}
                 </p>
                 <div class="cart-content__info">
                   <p class="font-16px ">{{ invoice.baseDate }}</p>
@@ -72,7 +72,7 @@
                   :key="invoice._id"
                 >
                   <p class="txt-origin font-16px font-weight-bold">
-                    {{ invoice._id }}
+                    {{ invoice.uid }}
                   </p>
                   <div class="cart-content__info">
                     <p class="font-16px ">{{ invoice.baseDate }}</p>
@@ -135,7 +135,7 @@
                   :key="invoice._id"
                 >
                   <p class="txt-origin font-16px font-weight-bold">
-                    {{ invoice._id }}
+                    {{ invoice.uid }}
                   </p>
                   <div class="cart-content__info">
                     <p class="font-16px ">{{ invoice.baseDate }}</p>
@@ -198,7 +198,7 @@
                   :key="invoice._id"
                 >
                   <p class="txt-origin font-16px font-weight-bold">
-                    {{ invoice._id }}
+                    {{ invoice.uid }}
                   </p>
                   <div class="cart-content__info">
                     <p class="font-16px ">{{ invoice.baseDate }}</p>
@@ -261,7 +261,7 @@
                   :key="invoice._id"
                 >
                   <p class="txt-origin font-16px font-weight-bold">
-                    {{ invoice._id }}
+                    {{ invoice.uid }}
                   </p>
                   <div class="cart-content__info">
                     <p class="font-16px ">{{ invoice.baseDate }}</p>
@@ -312,7 +312,7 @@
                   :key="invoice._id"
                 >
                   <p class="txt-origin font-16px font-weight-bold">
-                    {{ invoice._id }}
+                    {{ invoice.uid }}
                   </p>
                   <div class="cart-content__info">
                     <p class="font-16px ">{{ invoice.baseDate }}</p>
@@ -386,7 +386,8 @@ export default {
       dataComplete1: [],
       visibleModal: false,
       dataConfirmRequest: null,
-      activeButton: ""
+      activeButton: "",
+      HTML: null
     };
   },
   async created() {
@@ -435,18 +436,22 @@ export default {
       getInvoiceId: "users/getInvoiceId",
       updateInvoice: "users/updateInvoice"
     }),
-    printSection() {
-      // this.$htmlToPaper("tab-" + this.keyTab);
-      VueHtmlToPaper('tab-'+1)
+
+    async printSection () {
+      // Pass the element id here
+      await this.$htmlToPaper('tab-'+this.keyTab);
     },
 
     handlePrint() {
       const keyTab = this.keyTab;
+      this.HTML = document.body.innerHTML;
       const printContents = document.getElementById("tab-" + keyTab).innerHTML;
-      const originalContents = document.body.innerHTML;
       document.body.innerHTML = printContents;
       window.print();
-      document.body.innerHTML = originalContents;
+      document.body.innerHTML = this.HTML;
+      this.$router.push('/admin/orderHistory');
+      window.location.reload();
+
     },
     handleStatus(invoice) {
       if (_.isEmpty(invoice.invoiceDetail)) {

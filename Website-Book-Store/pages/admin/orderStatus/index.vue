@@ -23,7 +23,7 @@
                 :key="invoice._id"
               >
                 <p class="txt-origin font-16px font-weight-bold">
-                  {{ invoice._id }}
+                  {{ invoice.uid }}
                 </p>
                 <div class="cart-content__info">
                   <p class="font-16px ">{{ invoice.baseDate }}</p>
@@ -71,7 +71,7 @@
                   :key="invoice._id"
                 >
                   <p class="txt-origin font-16px font-weight-bold">
-                    {{ invoice._id }}
+                    {{ invoice.uid }}
                   </p>
                   <div class="cart-content__info">
                     <p class="font-16px ">{{ invoice.baseDate }}</p>
@@ -134,7 +134,7 @@
                   :key="invoice._id"
                 >
                   <p class="txt-origin font-16px font-weight-bold">
-                    {{ invoice._id }}
+                    {{ invoice.uid }}
                   </p>
                   <div class="cart-content__info">
                     <p class="font-16px ">{{ invoice.baseDate }}</p>
@@ -197,7 +197,7 @@
                   :key="invoice._id"
                 >
                   <p class="txt-origin font-16px font-weight-bold">
-                    {{ invoice._id }}
+                    {{ invoice.uid }}
                   </p>
                   <div class="cart-content__info">
                     <p class="font-16px ">{{ invoice.baseDate }}</p>
@@ -260,7 +260,7 @@
                   :key="invoice._id"
                 >
                   <p class="txt-origin font-16px font-weight-bold">
-                    {{ invoice._id }}
+                    {{ invoice.uid }}
                   </p>
                   <div class="cart-content__info">
                     <p class="font-16px ">{{ invoice.baseDate }}</p>
@@ -311,7 +311,7 @@
                   :key="invoice._id"
                 >
                   <p class="txt-origin font-16px font-weight-bold">
-                    {{ invoice._id }}
+                    {{ invoice.uid }}
                   </p>
                   <div class="cart-content__info">
                     <p class="font-16px ">{{ invoice.baseDate }}</p>

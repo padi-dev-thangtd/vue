@@ -29,6 +29,7 @@ export default {
     '@/plugins/antd',
     '@/plugins/v-mask',
     '@/plugins/filter',
+    '@/plugins/vuehtmltopaper',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
