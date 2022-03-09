@@ -13,7 +13,7 @@
       </div>
       <section class="bg-white cart-user">
         <div class="cart-content pr-0" v-for="invoice in listInvoice" :key="invoice._id">
-          <p class="txt-origin font-16px font-weight-bold">{{ invoice._id }}</p>
+          <p class="txt-origin font-16px font-weight-bold">{{ invoice.uid }}</p>
           <div class="cart-content__info">
             <p class="font-16px ">{{ invoice.baseDate }}</p>
           </div>

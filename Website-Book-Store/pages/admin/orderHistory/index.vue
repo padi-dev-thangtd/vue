@@ -6,7 +6,7 @@
           >Orders</a-breadcrumb-item
         >
       </a-breadcrumb>
-      <div @click="printSection">In đơn hàng</div>
+      <div @click="handlePrint">In đơn hàng</div>
       <div class="card-container">
         <a-tabs type="card" @change="changeTab">
           <a-tab-pane id="tab-1" key="1" tab="Tất cả">

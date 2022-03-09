@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const User = require('../models/user');
 const Invoice = require('../models/invoice');
 const Cart = require('../models/cart');
+// short-unique-id
+const ShortUniqueId = require('short-unique-id');
 
 const index = (req, res) => {
   try {
@@ -105,13 +107,15 @@ const getInvoiceAll = async (req, res, next) => {
 const newInvoice = async (req, res, next) => {
   const { userId } = req.params;
   if (mongoose.Types.ObjectId.isValid(userId)) {
+    const uid = new ShortUniqueId({ length: 10 });
     const newInvoice = new Invoice(req.body);
     const user = await User.findById(userId);
     newInvoice.owner = user;
+    newInvoice.uid = uid();
     await newInvoice.save();
     user.invoice.push(newInvoice._id);
     await user.save();
-    res.status(201).json({ invoice: newInvoice });
+    res.status(201).json({ invoice: newInvoice, uid: uid() });
   } else {
     console.log('data fail');
   }

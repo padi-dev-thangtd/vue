@@ -15,9 +15,8 @@ const invoiceSchema = new Schema({
   invoiceDetail: {
     type: Array,
   },
-  index: {
-    type: Number,
-    default: 0,
+  uid: {
+    type: String,
   },
 });
 
