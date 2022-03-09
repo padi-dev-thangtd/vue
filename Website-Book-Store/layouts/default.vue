@@ -41,30 +41,30 @@
               </div>
               <a-tooltip placement="bottomLeft" v-else>
                 <template slot="title">
-                  <div class="d-flex mb-2 align-items-center" @click="$router.push('/user/profile/')">
+                  <div  class="d-flex mb-2 align-items-center" @click="$router.push('/user/profile/')">
                     <a-icon type="user" class="txt-blue" />
                     <p class="ml-2">Thông Tin Tài Khoản</p>
                   </div>
-                  <div class="d-flex mb-2 align-items-center" @click="$router.push('/user/invoice/')">
+                  <div  v-if="dataToken&& !dataToken.permission == 'admin'" class="d-flex mb-2 align-items-center" @click="$router.push('/user/invoice/')">
                     <a-icon type="book" class="txt-green" />
                     <p class="ml-2">Đơn Hàng Của Tôi</p>
                   </div>
-                  <div class="d-flex mb-2 align-items-center" @click="$router.push('/user/point/')">
+                  <div  v-if="dataToken&&!dataToken.permission == 'admin'" class="d-flex mb-2 align-items-center" @click="$router.push('/user/point/')">
                     <a-icon type="dollar" class="text-warning"/>
                     <p class="ml-2 align-items-center">Điểm Tích Luỹ</p>
                   </div>
-                  <div class="d-flex mb-2 align-items-center" @click="$router.push('/user/voucher/')">
+                  <div  v-if="dataToken&&!dataToken.permission == 'admin'" class="d-flex mb-2 align-items-center" @click="$router.push('/user/voucher/')">
                     <a-icon type="account-book" class="txt-purple" />
                     <p class="ml-2">Voucher</p>
                   </div>
-                  <div v-if="dataToken.permission == 'admin'">
+                  <div v-if="dataToken&&dataToken.permission == 'admin'">
                     <hr class="my-2"/>
                     <div class="d-flex align-items-center" @click="$router.push('/admin/users/')">
                       <a-icon type="usergroup-add" class="txt-black"/>
                       <p class="ml-2">Quản Lý Hệ Thống Admin</p>
                     </div>
                   </div>
-                  <div v-if="dataToken.permission == 'admin'">
+                  <div v-if="dataToken&&!dataToken.permission == 'admin'">
                     <hr class="my-2"/>
                     <div class="d-flex align-items-center" @click="$router.push('/admin/orderStatus/')">
                       <a-icon type="dropbox" class="txt-black"/>
@@ -86,7 +86,7 @@
               </div>
               </a-tooltip>
             </div>
-            <div class="header-right__cart d-flex" @click="$router.push('/checkout/cart/')">
+            <div  v-if="dataToken && !dataToken.permission == 'admin'" class="header-right__cart d-flex" @click="$router.push('/checkout/cart/')">
               <img src="~/assets/images/icon-cart.svg" alt="icon-user" width="32" height="32" loading="lazy">
               <div class="header-right__cart-noti">{{ cartNumber }}</div>
               <p  class="txt-white pt-3 ml-1 font-12px">Giỏ hàng</p>

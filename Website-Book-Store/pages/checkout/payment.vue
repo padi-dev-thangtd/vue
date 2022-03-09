@@ -269,7 +269,8 @@ export default {
       dataVoucherUser: null,
       useVoucher: null,
       visibleModal: false,
-      path: null
+      path: null,
+      dataDetail: null
     };
   },
 
@@ -288,6 +289,12 @@ export default {
       ? JSON.parse(localStorage.getItem("data_login"))
       : "";
     const userIdOrder = this.$route.query.userId;
+    const invoiceId = this.$route.query.invoiceId;
+    const dataInvoiceId = await this.getInvoiceId({
+      userId: userIdOrder,
+      invoiceId: invoiceId
+    });
+
     this.dataUser = await this.$store.dispatch(
       "users/getUserInfo",
       dataLogin.token
@@ -298,7 +305,7 @@ export default {
       dataLogin.token
     );
     this.dataCart = response.cart;
-    console.log(this.dataCart)
+    console.log(this.dataCart, dataInvoiceId);
     const userOrder = response.user;
     if (userOrder) {
       this.form = {
@@ -368,7 +375,8 @@ export default {
       addInvoice: "users/addInvoice",
       getUserInfo: "users/getUserInfo",
       updateUser: "users/updateUser",
-      deleteAllCart: "users/deleteAllCart"
+      deleteAllCart: "users/deleteAllCart",
+      getInvoiceId: "users/getInvoiceId"
     }),
 
     hanhdlePayment() {

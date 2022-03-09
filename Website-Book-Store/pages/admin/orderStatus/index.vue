@@ -44,8 +44,8 @@
                     @click="
                       $router.push({
                         path: '/checkout/payment/',
-                        hash: 'info1',
-                        query: { userId: invoice.owner }
+                        hash: 'info',
+                        query: { userId: invoice.owner, invoiceId: invoice._id }
                       })
                     "
                   >
