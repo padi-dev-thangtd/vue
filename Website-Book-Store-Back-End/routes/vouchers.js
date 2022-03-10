@@ -6,8 +6,9 @@ router.route('/')
   .get(voucherController.index)
   .post(voucherController.newVoucher)
 
-router.route('/:voucherId')
+router.route('/decreaseVoucher/:voucherId')
   .get(voucherController.getVoucherId)
+  .patch(voucherController.decreaseVoucher)
   .put(voucherController.replaceVoucher)
   .delete(voucherController.removeVoucher)
 

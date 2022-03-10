@@ -62,6 +62,16 @@ export default {
       }
     },
 
+    async decreaseVoucher(context, params = null) {
+      try {
+        const resApi = await this.$axios.patch(`vouchers/decreaseVoucher/${params.voucherId}`, params);
+        console.log('hihihi')
+        return resApi;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
     // Cart
     async getCart(context, params) {
       try {

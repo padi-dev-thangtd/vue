@@ -32,6 +32,10 @@
           <a-input v-model="form.apply" />
         </a-form-model-item>
 
+        <a-form-model-item ref="quantity" label="Số lượng voucher" prop="quantity">
+          <a-input v-model="form.quantity" />
+        </a-form-model-item>
+
         <a-form-model-item ref="coin" label="Giá voucher" prop="coin">
           <a-input v-model="form.coin" />
         </a-form-model-item>
@@ -72,6 +76,7 @@ export default {
         baseDate: '',
         apply: '',
         coin: null,
+        quantity:null,
       },
       rules: {
         nameVoucher: [{ required: true, message: 'Vui lòng nhập tên Voucher ...', trigger: 'blur' },],
@@ -79,6 +84,7 @@ export default {
         baseDate: [{ required: true, message: 'Vui lòng nhập đường dẫn ảnh ...', trigger: 'blur' }],
         apply: [{ required: true, message: 'Vui lòng nhập Giá sách ...', trigger: 'blur' }],
         coin: [{ required: true, message: 'Vui lòng nhập Thể loại ...', trigger: 'blur' }],
+        quantity: [{ required: true, message: 'Vui lòng nhập số lượng voucher ...', trigger: 'blur' }],
       },
     };
   },

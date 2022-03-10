@@ -363,7 +363,7 @@ export default {
     const usedVoucher = userInfo?.usedVoucher;
     this.dataVoucherUser = this.listVoucher.filter(it => {
       return (
-        moment().isBefore(it.baseDate) &&
+        it.quantity>0 &&moment().isBefore(it.baseDate) &&
         it.apply <= this.totalMoneyBook &&
         !usedVoucher.includes(it?._id)
       );
@@ -376,7 +376,8 @@ export default {
       getUserInfo: "users/getUserInfo",
       updateUser: "users/updateUser",
       deleteAllCart: "users/deleteAllCart",
-      getInvoiceId: "users/getInvoiceId"
+      getInvoiceId: "users/getInvoiceId",
+      decreaseVoucher : "users/decreaseVoucher"
     }),
 
     hanhdlePayment() {
@@ -384,7 +385,6 @@ export default {
     },
     handleUseVoucher(voucher) {
       this.useVoucher = voucher;
-      console.log({ voucher });
       this.$refs["my-modal"].hide();
       // if (voucher.nameVoucher.toLowerCase().includes("coupon")) {
       //   this.totalCoupon = _.replace(
@@ -417,11 +417,11 @@ export default {
       // delete All Cart
       const userId = dataLogin?.token;
       await this.deleteAllCart({ userId });
-
       if (this.useVoucher) {
         let userInfo = await this.getUserInfo(dataLogin.token);
         userInfo.usedVoucher.push(this.useVoucher._id);
         await this.updateUser(userInfo);
+        await this.decreaseVoucher({ voucherId: this.useVoucher._id });
       }
       let dataPayment = {
         userId: dataLogin.token,

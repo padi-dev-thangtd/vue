@@ -20,6 +20,7 @@ const voucherSchema = new Schema({
   coin: {
     type: Number,
   },
+  quantity: { type: Number, default: 1 },
 });
 
 const voucher = mongoose.model('voucher', voucherSchema);
