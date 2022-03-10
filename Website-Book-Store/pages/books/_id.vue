@@ -11,7 +11,9 @@
               loading="lazy"
             />
           </div>
+
           <div
+            v-if="dataUser ? !(dataUser.permission === 'admin') : true"
             class="product-view__image-btn mt-3"
           >
             <b-button
@@ -81,7 +83,10 @@
             <span class="mr-1">Địa điểm giao hàng: </span>
             <span class="change cursor-pointer">Thay đổi</span>
           </div>
-          <div class="product-view__detail-quantity">
+          <div
+            v-if="dataUser ? !(dataUser.permission === 'admin') : true"
+            class="product-view__detail-quantity"
+          >
             <span class="mr-4 font-16px font-weight-bold">Số lượng: </span>
             <div class="caculator-quantity">
               <span class="minus mr-3" @click="handleMinus">-</span>

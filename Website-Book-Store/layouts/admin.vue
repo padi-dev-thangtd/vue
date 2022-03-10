@@ -120,6 +120,25 @@
               </div>
             </nuxt-link>
           </a-sub-menu>
+           <a-sub-menu
+            key="6"
+            :class="
+              setMenuActive(URL_MENU.ORDER_STATISTICS, path)
+                ? 'ant-menu-item-selected'
+                : ''
+            "
+          >
+            <nuxt-link
+              slot="title"
+              to="/admin/orderStatistics"
+              class="txt-white font-16px"
+            >
+              <div class="d-flex align-items-center sub-menu-item-height">
+                <a-icon type="account-book" />
+                <span>Order statistics</span>
+              </div>
+            </nuxt-link>
+          </a-sub-menu>
         </a-menu>
       </a-layout-sider>
       <a-layout>
