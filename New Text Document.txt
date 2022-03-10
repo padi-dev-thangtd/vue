@@ -12,7 +12,7 @@ Sửa:
 10	10- thêm phần thống kê đơn hàng(danh sách các đơn hàng) và hỗ trợ định dạng in có thể chọn số  đơn hàng để in (pdf).
 
 	11 : - product thay ảnh
-	12 : - số lượng voucher  - update voucher.
+12	12 : - số lượng voucher  - update voucher.
 	13 : Sửa thông tin đơn hàng -> Tên user
 	14 : ấn vào tông tin đơn àng trong order status -> hiển thị ở trong trang quản trị
 	15 : Thông tin đơn hàng -> Điền thông tin
