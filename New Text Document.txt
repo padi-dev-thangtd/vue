@@ -13,9 +13,9 @@ Sửa:
 
 	11 : - product thay ảnh
 12	12 : - số lượng voucher  - update voucher.
-	13 : Sửa thông tin đơn hàng -> Tên user
+13	13 : Sửa thông tin đơn hàng -> Tên user
 	14 : ấn vào tông tin đơn àng trong order status -> hiển thị ở trong trang quản trị
-	15 : Thông tin đơn hàng -> Điền thông tin
+15	15 : Thông tin đơn hàng -> Điền thông tin
 16	16: Mình là admin thì k mua bán được
 17	17: ADmin : menu :  -Thông tin tài khoản, quarnlys hệ thống admin, đăng xuất
 	18: Trang chủ -> hiển thị lọc theo thể loại

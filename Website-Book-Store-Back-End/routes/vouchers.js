@@ -5,8 +5,9 @@ const voucherController = require('../controllers/voucher');
 router.route('/')
   .get(voucherController.index)
   .post(voucherController.newVoucher)
-
-router.route('/decreaseVoucher/:voucherId')
+  router.route('/decreaseVoucher/:voucherId')
+  .patch(voucherController.decreaseVoucher);
+router.route('/:voucherId')
   .get(voucherController.getVoucherId)
   .patch(voucherController.decreaseVoucher)
   .put(voucherController.replaceVoucher)

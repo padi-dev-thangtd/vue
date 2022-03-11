@@ -74,10 +74,8 @@ const getInvoice = async (req, res, next) => {
 const getInvoiceId = async (req, res, next) => {
   try {
     let { userId, invoiceId } = req.params;
-    const user = await User.findById(userId).populate('invoice');
-    const invoice = await user.invoice.find((it) => {
-      return it._id == invoiceId;
-    });
+    const user = await User.findById(userId);
+    const invoice = await Invoice.findById(invoiceId).populate('owner');
 
     return res.status(200).json({ invoiceId: invoice });
   } catch (e) {

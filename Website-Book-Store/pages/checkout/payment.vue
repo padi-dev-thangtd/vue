@@ -8,7 +8,7 @@
       <div>
         <a-form-model
           ref="ruleForm"
-          :model="form"
+          :model="$route.hash !== '#info' ? form : dataDetail"
           :rules="rules"
           :label-col="labelCol"
           :wrapper-col="wrapperCol"
@@ -294,6 +294,8 @@ export default {
       userId: userIdOrder,
       invoiceId: invoiceId
     });
+    this.dataDetail = dataInvoiceId;
+    console.log({ dataDetail: this.dataDetail });
 
     this.dataUser = await this.$store.dispatch(
       "users/getUserInfo",
@@ -305,7 +307,7 @@ export default {
       dataLogin.token
     );
     this.dataCart = response.cart;
-    console.log(this.dataCart, dataInvoiceId);
+    console.log({ dataInvoiceId, dataCart: this.dataCart });
     const userOrder = response.user;
     if (userOrder) {
       this.form = {
@@ -315,6 +317,19 @@ export default {
         email: userOrder.email,
         permission: userOrder.permission
       };
+    }
+    // hash info
+    if (this.$route.hash === "#info") {
+      const data = dataInvoiceId.owner;
+      const order = dataInvoiceId.order;
+      this.form = {
+        name: data.name,
+        phone: data.phone ? `0${data.phone}` : "",
+        address: data.address,
+        email: data.email,
+        permission: data.permission
+      };
+      this.dataCart = order;
     }
 
     if (this.dataCart.length == 1) {
@@ -363,7 +378,8 @@ export default {
     const usedVoucher = userInfo?.usedVoucher;
     this.dataVoucherUser = this.listVoucher.filter(it => {
       return (
-        it.quantity>0 &&moment().isBefore(it.baseDate) &&
+        it.quantity > 0 &&
+        moment().isBefore(it.baseDate) &&
         it.apply <= this.totalMoneyBook &&
         !usedVoucher.includes(it?._id)
       );
@@ -377,7 +393,7 @@ export default {
       updateUser: "users/updateUser",
       deleteAllCart: "users/deleteAllCart",
       getInvoiceId: "users/getInvoiceId",
-      decreaseVoucher : "users/decreaseVoucher"
+      decreaseVoucher: "users/decreaseVoucher"
     }),
 
     hanhdlePayment() {
@@ -429,7 +445,8 @@ export default {
           baseDate: moment().format("YYYY/MM/DD"),
           money: this.totalMoney,
           content: this.contentInvoice,
-          invoiceDetail: []
+          invoiceDetail: [],
+          order: this.dataCart
         }
       };
       await this.addInvoice(dataPayment);

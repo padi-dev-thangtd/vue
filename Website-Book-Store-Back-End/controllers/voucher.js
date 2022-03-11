@@ -1,4 +1,4 @@
-const Voucher = require("../models/vouchers");
+const Voucher = require('../models/vouchers');
 
 const index = (req, res) => {
   try {
@@ -25,6 +25,7 @@ const newVoucher = async (req, res, next) => {
 const getVoucherId = async (req, res, next) => {
   try {
     const { voucherId } = req.params;
+    console.log({ voucherId });
     const voucher = await Voucher.findById(voucherId);
 
     return res.status(200).json({ voucher });

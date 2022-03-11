@@ -474,9 +474,9 @@ export default {
         userId: owner,
         invoiceId: id,
         data: {
-          baseDate: dataInvoiceId.baseDate,
-          money: dataInvoiceId.money,
-          content: dataInvoiceId.content,
+          baseDate: dataInvoiceId?.baseDate,
+          money: dataInvoiceId?.money,
+          content: dataInvoiceId?.content,
           invoiceDetail: invoiceDetail
         }
       };

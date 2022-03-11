@@ -42,6 +42,7 @@ export default {
 
     async getVoucherId(context, voucherId = null) {
       try {
+        console.log({voucherId})
         const resApi = await this.$axios.get(`vouchers/${voucherId}`);
         return resApi.voucher;
       } catch(err) {
