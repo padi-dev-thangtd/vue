@@ -6,22 +6,42 @@
           >Orders</a-breadcrumb-item
         >
       </a-breadcrumb>
-      <div @click="handlePrint">In đơn hàng</div>
-      <div>startDate : {{ date.startDate }}</div>
-      <a-date-picker
-        v-model="date.startDate"
-        type="date"
-        placeholder="Pick a date"
-        style="width: 65%;"
-      />
-      <div>endDate : {{ date.endDate }}</div>
-      <a-date-picker
-        v-model="date.endDate"
-        type="date"
-        placeholder="Pick a date"
-        style="width: 65%;"
-      />
-      <button @click="handleLog">Tìm kiếm</button>
+      <button
+        style="border: 1px solid #007bff;padding: 10px;color: #fff;background: #007bff;border-radius: 5px; margin-bottom:15px"
+        @click="handlePrint"
+      >
+        In đơn hàng
+      </button>
+      <div style="display:flex;flex-direction:column; align-items:flex-end">
+        <div style="display:flex; align-items:flex-end; margin-right:20px">
+          <div>
+            <div>Chọn ngày</div>
+            <a-range-picker @change="onChangeDateRange" />
+          </div>
+        </div>
+        <div>
+          <button
+            style="border: 1px solid #007bff;padding: 0 10px;color: #fff;background: #007bff;border-radius: 5px; height:32px; margin:10px 20px"
+            @click="handleLog"
+          >
+            Tìm kiếm
+          </button>
+        </div>
+      </div>
+      <div
+        style="display:flex; justify-content:flex-end;padding: 0 10px;border-radius: 5px; height:32px; margin:10px 20px"
+      >
+        <div
+          style="border: 1px solid #007bff;display: flex;align-items: center; padding:10px 20px"
+        >
+          Tổng tiền các đơn :
+          <span style="font-weight:bold; margin: 0 10px">{{
+            totalMoney.toString()
+          }}</span>
+          đ
+        </div>
+      </div>
+
       <div class="card-container">
         <a-tabs type="card" @change="changeTab">
           <a-tab-pane id="tab-1" key="1" tab="Tất cả">
@@ -399,7 +419,8 @@ export default {
       dataConfirmRequest: null,
       activeButton: "",
       HTML: null,
-      date: { startDate: null, endDate: null }
+      date: { startDate: null, endDate: null },
+      totalMoney: 0
     };
   },
   async created() {
@@ -426,6 +447,10 @@ export default {
       .flat();
     this.dataInvoiceAll = newDataUsers;
     console.log({ dataInvoiceAll: this.dataInvoiceAll });
+    const totalPrice = data => {
+      return data.reduce((acc, item) => acc + item.money, 0);
+    };
+    this.totalMoney = totalPrice(this.dataInvoiceAll);
 
     this.dataConfirm = this.dataInvoiceAll.filter(it => {
       return !it.invoiceDetail.length;
@@ -453,27 +478,36 @@ export default {
       // Pass the element id here
       await this.$htmlToPaper("tab-" + this.keyTab);
     },
+    onChangeDateRange(date, dateString) {
+      if (date) {
+        this.date.startDate = date[0];
+        this.date.endDate = date[1];
+      } else {
+        this.date.startDate = null;
+        this.date.endDate = null;
+      }
+    },
     async handleLog() {
-         this.dataInvoiceAllResponse = await this.$store.dispatch(
-      "users/getInvoiceAllResponse"
-    );
-    const dataUsers = this.dataInvoiceAllResponse.userAll;
-    const newDataUsers = dataUsers
-      .map(user => {
-        const invoice = user.invoice.map(item => {
-          return {
-            ...item,
-            address: user?.address,
-            email: user?.email,
-            name: user?.name,
-            phone: user?.phone,
-            userName: user?.userName
-          };
-        });
-        return invoice;
-      })
-      .flat();
-    this.dataInvoiceAll = newDataUsers;
+      this.dataInvoiceAllResponse = await this.$store.dispatch(
+        "users/getInvoiceAllResponse"
+      );
+      const dataUsers = this.dataInvoiceAllResponse.userAll;
+      const newDataUsers = dataUsers
+        .map(user => {
+          const invoice = user.invoice.map(item => {
+            return {
+              ...item,
+              address: user?.address,
+              email: user?.email,
+              name: user?.name,
+              phone: user?.phone,
+              userName: user?.userName
+            };
+          });
+          return invoice;
+        })
+        .flat();
+      this.dataInvoiceAll = newDataUsers;
       if (this.date.startDate && this.date.endDate) {
         this.dataInvoiceAll = this.dataInvoiceAll.filter(it => {
           return moment(it?.baseDate).isBetween(
@@ -481,6 +515,28 @@ export default {
             this.date.endDate
           );
         });
+        const totalPrice = data => {
+          return data.reduce((acc, item) => acc + item.money, 0);
+        };
+        this.totalMoney = totalPrice(this.dataInvoiceAll);
+        if (this.keyTab === "1") {
+          this.totalMoney = totalPrice(this.dataInvoiceAll);
+        }
+        if (this.keyTab === "2") {
+          this.totalMoney = totalPrice(this.dataConfirm);
+        }
+        if (this.keyTab === "3") {
+          this.totalMoney = totalPrice(this.dataTransport);
+        }
+        if (this.keyTab === "4") {
+          this.totalMoney = totalPrice(this.dataComplete);
+        }
+        if (this.keyTab === "5") {
+          this.totalMoney = totalPrice(this.dataComplete1);
+        }
+        if (this.keyTab === "6") {
+          this.totalMoney = totalPrice(this.dataCancel);
+        }
 
         this.dataConfirm = this.dataInvoiceAll.filter(it => {
           return !it.invoiceDetail.length;
@@ -514,8 +570,8 @@ export default {
       document.body.innerHTML = printContents;
       window.print();
       document.body.innerHTML = this.HTML;
-      this.$router.push("/admin/orderHistory");
-      window.location.reload();
+      // window.location.reload();
+      this.$router.go(this.$router.currentRoute)
     },
     handleStatus(invoice) {
       if (_.isEmpty(invoice.invoiceDetail)) {
@@ -639,6 +695,28 @@ export default {
     changeTab(key) {
       this.keyTab = key;
       console.log({ key });
+      const totalPrice = data => {
+        return data.reduce((acc, item) => acc + item.money, 0);
+      };
+      this.totalMoney = totalPrice(this.dataInvoiceAll);
+      if (this.keyTab === "1") {
+        this.totalMoney = totalPrice(this.dataInvoiceAll);
+      }
+      if (this.keyTab === "2") {
+        this.totalMoney = totalPrice(this.dataConfirm);
+      }
+      if (this.keyTab === "3") {
+        this.totalMoney = totalPrice(this.dataTransport);
+      }
+      if (this.keyTab === "4") {
+        this.totalMoney = totalPrice(this.dataComplete);
+      }
+      if (this.keyTab === "5") {
+        this.totalMoney = totalPrice(this.dataComplete1);
+      }
+      if (this.keyTab === "6") {
+        this.totalMoney = totalPrice(this.dataCancel);
+      }
     }
   }
 };
