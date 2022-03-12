@@ -84,12 +84,20 @@
                     </p>
                   </div>
                   <div>
-                    <a-button type="yellow">
-                      <nuxt-link
-                        :to="{ path: '/checkout/payment/', hash: 'info' }"
-                      >
-                        Thông tin đơn hàng
-                      </nuxt-link>
+                    <a-button
+                      type="yellow"
+                      @click="
+                        $router.push({
+                          path: '/checkout/payment/',
+                          hash: 'info',
+                          query: {
+                            userId: invoice.owner,
+                            invoiceId: invoice._id
+                          }
+                        })
+                      "
+                    >
+                      Thông tin đơn hàng
                     </a-button>
                   </div>
                   <div>
@@ -147,12 +155,20 @@
                     </p>
                   </div>
                   <div>
-                    <a-button type="yellow">
-                      <nuxt-link
-                        :to="{ path: '/checkout/payment/', hash: 'info' }"
-                      >
-                        Thông tin đơn hàng
-                      </nuxt-link>
+                    <a-button
+                      type="yellow"
+                      @click="
+                        $router.push({
+                          path: '/checkout/payment/',
+                          hash: 'info',
+                          query: {
+                            userId: invoice.owner,
+                            invoiceId: invoice._id
+                          }
+                        })
+                      "
+                    >
+                      Thông tin đơn hàng
                     </a-button>
                   </div>
                   <div>
@@ -210,12 +226,20 @@
                     </p>
                   </div>
                   <div>
-                    <a-button type="yellow">
-                      <nuxt-link
-                        :to="{ path: '/checkout/payment/', hash: 'info' }"
-                      >
-                        Thông tin đơn hàng
-                      </nuxt-link>
+                    <a-button
+                      type="yellow"
+                      @click="
+                        $router.push({
+                          path: '/checkout/payment/',
+                          hash: 'info',
+                          query: {
+                            userId: invoice.owner,
+                            invoiceId: invoice._id
+                          }
+                        })
+                      "
+                    >
+                      Thông tin đơn hàng
                     </a-button>
                   </div>
                   <div>
@@ -273,12 +297,20 @@
                     </p>
                   </div>
                   <div>
-                    <a-button type="yellow">
-                      <nuxt-link
-                        :to="{ path: '/checkout/payment/', hash: 'info' }"
-                      >
-                        Thông tin đơn hàng
-                      </nuxt-link>
+                    <a-button
+                      type="yellow"
+                      @click="
+                        $router.push({
+                          path: '/checkout/payment/',
+                          hash: 'info',
+                          query: {
+                            userId: invoice.owner,
+                            invoiceId: invoice._id
+                          }
+                        })
+                      "
+                    >
+                      Thông tin đơn hàng
                     </a-button>
                   </div>
                   <div>
@@ -324,12 +356,20 @@
                     </p>
                   </div>
                   <div>
-                    <a-button type="yellow">
-                      <nuxt-link
-                        :to="{ path: '/checkout/payment/', hash: 'info' }"
-                      >
-                        Thông tin đơn hàng
-                      </nuxt-link>
+                    <a-button
+                      type="yellow"
+                      @click="
+                        $router.push({
+                          path: '/checkout/payment/',
+                          hash: 'info',
+                          query: {
+                            userId: invoice.owner,
+                            invoiceId: invoice._id
+                          }
+                        })
+                      "
+                    >
+                      Thông tin đơn hàng
                     </a-button>
                   </div>
                   <div>

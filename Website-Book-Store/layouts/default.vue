@@ -102,7 +102,7 @@
                       <p class="ml-2">Quản Lý Hệ Thống Admin</p>
                     </div>
                   </div>
-                  <div   v-if="dataToken ? !(dataToken.permission === 'admin') : true">
+                  <!-- <div   v-if="dataToken ? !(dataToken.permission === 'admin') : true">
                     <hr class="my-2" />
                     <div
                       class="d-flex align-items-center"
@@ -111,7 +111,7 @@
                       <a-icon type="dropbox" class="txt-black" />
                       <p class="ml-2">Quản Lý Đơn Hàng</p>
                     </div>
-                  </div>
+                  </div> -->
                   <hr class="my-2" />
                   <div class="d-flex align-items-center" @click="handleLogout">
                     <a-icon type="logout" class="txt-red" />

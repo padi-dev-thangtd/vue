@@ -4,7 +4,9 @@
       <a-breadcrumb-item class="font-16px cursor-pointer">
         <span @click="$router.push('/admin/products')">Products</span>
       </a-breadcrumb-item>
-      <a-breadcrumb-item class="font-16px text-underline cursor-pointer">Add</a-breadcrumb-item>
+      <a-breadcrumb-item class="font-16px text-underline cursor-pointer"
+        >Add</a-breadcrumb-item
+      >
     </a-breadcrumb>
     <div>
       <div class="font-24px text-center mb-3">Add product</div>
@@ -23,16 +25,47 @@
           <a-input v-model="form.auth" />
         </a-form-model-item>
 
-        <a-form-model-item ref="image" label="Đường dẫn ảnh" prop="image">
-          <a-input v-model="form.image" />
+        <a-form-model-item ref="image" label="Ảnh sản phẩm" prop="image">
+          <div class="clearfix">
+            <a-upload
+              list-type="picture-card"
+              :file-list="fileList"
+              @preview="handlePreview"
+              @change="handleChange"
+              @remove="handleRemove"
+            >
+              <div v-if="fileList.length < 1">
+                <a-icon type="plus" />
+                <div class="ant-upload-text">
+                  Upload
+                </div>
+              </div>
+            </a-upload>
+            <a-modal
+              :visible="previewVisible"
+              :footer="null"
+              @cancel="handleCancel"
+            >
+              <img alt="example" style="width: 100%" :src="previewImage" />
+            </a-modal>
+          </div>
         </a-form-model-item>
 
         <a-form-model-item ref="type" label="Thể loại" prop="type">
-          <a-select v-model="form.type" placeholder="Chọn thể loại của sản phẩm !">
-            <a-select-option value="Chính trị - Pháp luật">Chính trị - Pháp luật</a-select-option>
-            <a-select-option value="Văn học nghệ thuật">Văn học nghệ thuật</a-select-option>
+          <a-select
+            v-model="form.type"
+            placeholder="Chọn thể loại của sản phẩm !"
+          >
+            <a-select-option value="Chính trị - Pháp luật"
+              >Chính trị - Pháp luật</a-select-option
+            >
+            <a-select-option value="Văn học nghệ thuật"
+              >Văn học nghệ thuật</a-select-option
+            >
             <a-select-option value="Thiếu nhi">Thiếu nhi</a-select-option>
-            <a-select-option value="Truyện, Tiểu thuyết">Truyện, Tiểu thuyết</a-select-option>
+            <a-select-option value="Truyện, Tiểu thuyết"
+              >Truyện, Tiểu thuyết</a-select-option
+            >
             <a-select-option value="Giáo trình">Giáo trình</a-select-option>
           </a-select>
         </a-form-model-item>
@@ -60,7 +93,12 @@
         </a-form-model-item>
 
         <a-form-model-item ref="content" label="Nội dung" prop="content">
-          <a-input v-model="form.content" type="textarea" placeholder="Nội dung của sản phẩm" :auto-size="{ minRows: 6, maxRows: 12 }" />
+          <a-input
+            v-model="form.content"
+            type="textarea"
+            placeholder="Nội dung của sản phẩm"
+            :auto-size="{ minRows: 6, maxRows: 12 }"
+          />
         </a-form-model-item>
 
         <a-form-model-item ref="sale" label="Giảm giá" prop="sale">
@@ -80,52 +118,127 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions } from "vuex";
+
+function getBase64(file) {
+  if (!file) {
+    return;
+  }
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
 export default {
-  layout: 'admin',
+  layout: "admin",
   data() {
     return {
       labelCol: { span: 6 },
       wrapperCol: { span: 12 },
-      other: '',
+      other: "",
       form: {
-        name: '',
-        auth: '',
-        image: '',
+        name: "",
+        auth: "",
+        image: "",
         price: null,
         type: undefined,
         quanlity: null,
         pageNumber: null,
         rate: undefined,
-        content: '',
-        sale: ''
+        content: "",
+        sale: ""
       },
       rules: {
-        name: [{ required: true, message: 'Vui lòng nhập tên Sách ...', trigger: 'blur' },],
-        auth: [{ required: true, message: 'Vui lòng nhập tên Tác giả ...', trigger: 'blur' }],
-        image: [{ required: true, message: 'Vui lòng nhập đường dẫn ảnh ...', trigger: 'blur' }],
-        price: [{ required: true, message: 'Vui lòng nhập Giá sách ...', trigger: 'blur' }],
-        type: [{ required: true, message: 'Vui lòng nhập Thể loại ...', trigger: 'blur' }],
-        quanlity: [{ required: true, message: 'Vui lòng nhập Số lượng ...', trigger: 'blur' }],
-        pageNumber: [{ required: true, message: 'Vui lòng nhập Số trang ...', trigger: 'blur' }],
-        rate: [{ required: true, message: 'Vui lòng nhập Đánh giá sản phẩm ...', trigger: 'blur' }],
-        content: [{ required: true, message: 'Vui lòng nhập Nội dung ...', trigger: 'blur' }],
-        sale: [{ required: true, message: 'Vui lòng nhập Giảm giá sản phẩm ...', trigger: 'blur' }],
+        name: [
+          {
+            required: true,
+            message: "Vui lòng nhập tên Sách ...",
+            trigger: "blur"
+          }
+        ],
+        auth: [
+          {
+            required: true,
+            message: "Vui lòng nhập tên Tác giả ...",
+            trigger: "blur"
+          }
+        ],
+        image: [
+          {
+            required: true,
+            message: "Vui lòng chọn ảnh sản phẩm ...",
+            trigger: "blur"
+          }
+        ],
+        price: [
+          {
+            required: true,
+            message: "Vui lòng nhập Giá sách ...",
+            trigger: "blur"
+          }
+        ],
+        type: [
+          {
+            required: true,
+            message: "Vui lòng nhập Thể loại ...",
+            trigger: "blur"
+          }
+        ],
+        quanlity: [
+          {
+            required: true,
+            message: "Vui lòng nhập Số lượng ...",
+            trigger: "blur"
+          }
+        ],
+        pageNumber: [
+          {
+            required: true,
+            message: "Vui lòng nhập Số trang ...",
+            trigger: "blur"
+          }
+        ],
+        rate: [
+          {
+            required: true,
+            message: "Vui lòng nhập Đánh giá sản phẩm ...",
+            trigger: "blur"
+          }
+        ],
+        content: [
+          {
+            required: true,
+            message: "Vui lòng nhập Nội dung ...",
+            trigger: "blur"
+          }
+        ],
+        sale: [
+          {
+            required: true,
+            message: "Vui lòng nhập Giảm giá sản phẩm ...",
+            trigger: "blur"
+          }
+        ]
       },
+      fileList: [],
+      previewVisible: false,
+      previewImage: ""
     };
   },
   methods: {
     ...mapActions({
-      addListProduct: 'products/addListProduct',
+      addListProduct: "products/addListProduct"
     }),
 
     onSubmit() {
       this.$refs.ruleForm.validate(async valid => {
         if (valid) {
           await this.addListProduct(this.form);
-          this.$router.push('/admin/products/');
+          this.$router.push("/admin/products/");
         } else {
-          console.log('error submit!!');
+          console.log("error submit!!");
           return false;
         }
       });
@@ -133,6 +246,29 @@ export default {
     resetForm() {
       this.$refs.ruleForm.resetFields();
     },
-  },
+    handleCancel() {
+      this.previewVisible = false;
+    },
+    async handlePreview(file) {
+      this.previewVisible = true;
+    },
+    handleRemove() {
+      console.log("remove");
+    },
+    async handleChange({ fileList }) {
+      this.fileList = fileList;
+      const file = fileList[0];
+
+      if (!file) {
+        this.form.image = "";
+        return;
+      }
+      if (!file?.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj);
+      }
+      this.previewImage = file.url || file.preview;
+      this.form.image = this.previewImage;
+    }
+  }
 };
 </script>
