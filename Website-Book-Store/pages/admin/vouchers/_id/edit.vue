@@ -38,6 +38,22 @@
           <a-input v-model="form.apply" />
         </a-form-model-item>
 
+        <a-form-model-item
+          ref="quantity"
+          label="Số lượng voucher"
+          prop="quantity"
+        >
+          <a-input v-model="form.quantity" />
+        </a-form-model-item>
+
+        <a-form-model-item
+          ref="discount"
+          label="Số tiền giảm giá"
+          prop="discount"
+        >
+          <a-input v-model="form.discount" />
+        </a-form-model-item>
+
         <a-form-model-item ref="coin" label="Giá voucher" prop="coin">
           <a-input v-model="form.coin" />
         </a-form-model-item>
@@ -80,7 +96,9 @@ export default {
         logo: undefined,
         baseDate: "",
         apply: "",
-        coin: null
+        coin: null,
+        quantity: null,
+        discount: null
       },
       rules: {
         nameVoucher: [
@@ -115,6 +133,20 @@ export default {
           {
             required: true,
             message: "Vui lòng nhập Thể loại ...",
+            trigger: "blur"
+          }
+        ],
+        quantity: [
+          {
+            required: true,
+            message: "Vui lòng nhập số lượng voucher ...",
+            trigger: "blur"
+          }
+        ],
+        discount: [
+          {
+            required: true,
+            message: "Vui lòng nhập số tiền giảm giá  ...",
             trigger: "blur"
           }
         ]

@@ -28,19 +28,6 @@
           </button>
         </div>
       </div>
-      <div
-        style="display:flex; justify-content:flex-end;padding: 0 10px;border-radius: 5px; height:32px; margin:10px 20px"
-      >
-        <div
-          style="border: 1px solid #007bff;display: flex;align-items: center; padding:10px 20px"
-        >
-          Tổng tiền các đơn :
-          <span style="font-weight:bold; margin: 0 10px">{{
-            totalMoney.toString()
-          }}</span>
-          đ
-        </div>
-      </div>
 
       <div class="card-container">
         <a-tabs type="card" @change="changeTab">
@@ -80,22 +67,35 @@
                   </div>
                 </div>
               </div>
+              <div
+                style="display:flex; justify-content:flex-end;padding: 0 10px;border-radius: 5px; height:32px; margin:10px 20px"
+              >
+                <div
+                  style="border: 1px solid #007bff;display: flex;align-items: center; padding:10px 20px"
+                >
+                  Tổng tiền các đơn :
+                  <span style="font-weight:bold; margin: 0 10px">{{
+                    totalMoney.toString()
+                  }}</span>
+                  đ
+                </div>
+              </div>
             </section>
           </a-tab-pane>
 
+          <!-- tab 2  -->
           <a-tab-pane id="tab-2" key="2" tab="Chờ xác nhận">
             <div v-if="!!dataConfirm.length">
-              <div class="order-status__title">
+              <div class="order-status__title order-status__title-all">
                 <p class="font-16px">Mã đơn hàng</p>
                 <p class="font-16px">Ngày đặt hàng</p>
                 <p class="font-16px">Tổng tiền</p>
                 <p class="font-16px">Trạng thái đơn hàng</p>
-                <p class="font-16px">Thông tin đơn hàng</p>
-                <p class="font-16px">Xác nhận</p>
+                <p class="font-16px">Tên người đặt</p>
               </div>
               <section class="bg-white cart-user">
                 <div
-                  class="cart-content pr-0"
+                  class="cart-content cart-content-all pr-0"
                   v-for="invoice in dataConfirm"
                   :key="invoice._id"
                 >
@@ -107,38 +107,31 @@
                   </div>
                   <div class="cart-content__payment">
                     <p class="txt-origin font-16px font-weight-bold">
-                      {{ invoice.money | numberWithCommas }} đ
+                      {{ invoice.money | numberWithCommas }}đ
+                    </p>
+                  </div>
+                  <div class="cart-content__delivery">
+                    <p class="font-18px txt-red font-weight-bold">
+                      {{ handleStatus(invoice) }}
                     </p>
                   </div>
                   <div>
-                    <a-button type="yellow">
-                      <nuxt-link
-                        :to="{
-                          path: '/checkout/payment/',
-                          hash: 'info'
-                        }"
-                      >
-                        Thông tin đơn hàng
-                      </nuxt-link>
-                    </a-button>
+                    <div class="txt-primary" style="color:#007bff">
+                      {{ invoice.name }}
+                    </div>
                   </div>
-                  <div>
-                    <a-button
-                      type="primary"
-                      @click="
-                        handleConfirm(invoice._id, invoice.owner, 'confirm')
-                      "
-                      >Xác nhận</a-button
-                    >
-                  </div>
-                  <div>
-                    <a-button
-                      type="danger"
-                      @click="
-                        handleConfirm(invoice._id, invoice.owner, 'cancel')
-                      "
-                      >Hủy đơn hàng</a-button
-                    >
+                </div>
+                <div
+                  style="display:flex; justify-content:flex-end;padding: 0 10px;border-radius: 5px; height:32px; margin:10px 20px"
+                >
+                  <div
+                    style="border: 1px solid #007bff;display: flex;align-items: center; padding:10px 20px"
+                  >
+                    Tổng tiền các đơn :
+                    <span style="font-weight:bold; margin: 0 10px">{{
+                      totalMoney.toString()
+                    }}</span>
+                    đ
                   </div>
                 </div>
               </section>
@@ -149,19 +142,19 @@
             </div>
           </a-tab-pane>
 
+          <!-- tab 3 -->
           <a-tab-pane id="tab-3" key="3" tab="Lấy hàng">
             <div v-if="!!dataTransport.length">
-              <div class="order-status__title">
+              <div class="order-status__title order-status__title-all">
                 <p class="font-16px">Mã đơn hàng</p>
                 <p class="font-16px">Ngày đặt hàng</p>
                 <p class="font-16px">Tổng tiền</p>
                 <p class="font-16px">Trạng thái đơn hàng</p>
-                <p class="font-16px">Thông tin đơn hàng</p>
-                <p class="font-16px">Xác nhận</p>
+                <p class="font-16px">Tên người đặt</p>
               </div>
               <section class="bg-white cart-user">
                 <div
-                  class="cart-content pr-0"
+                  class="cart-content cart-content-all pr-0"
                   v-for="invoice in dataTransport"
                   :key="invoice._id"
                 >
@@ -173,35 +166,31 @@
                   </div>
                   <div class="cart-content__payment">
                     <p class="txt-origin font-16px font-weight-bold">
-                      {{ invoice.money | numberWithCommas }} đ
+                      {{ invoice.money | numberWithCommas }}đ
+                    </p>
+                  </div>
+                  <div class="cart-content__delivery">
+                    <p class="font-18px txt-red font-weight-bold">
+                      {{ handleStatus(invoice) }}
                     </p>
                   </div>
                   <div>
-                    <a-button type="yellow">
-                      <nuxt-link
-                        :to="{ path: '/checkout/payment/', hash: 'info' }"
-                      >
-                        Thông tin đơn hàng
-                      </nuxt-link>
-                    </a-button>
+                    <div class="txt-primary" style="color:#007bff">
+                      {{ invoice.name }}
+                    </div>
                   </div>
-                  <div>
-                    <a-button
-                      type="primary"
-                      @click="
-                        handleConfirm(invoice._id, invoice.owner, 'transport')
-                      "
-                      >Xác nhận</a-button
-                    >
-                  </div>
-                  <div>
-                    <a-button
-                      type="danger"
-                      @click="
-                        handleConfirm(invoice._id, invoice.owner, 'cancel')
-                      "
-                      >Hủy đơn hàng</a-button
-                    >
+                </div>
+                <div
+                  style="display:flex; justify-content:flex-end;padding: 0 10px;border-radius: 5px; height:32px; margin:10px 20px"
+                >
+                  <div
+                    style="border: 1px solid #007bff;display: flex;align-items: center; padding:10px 20px"
+                  >
+                    Tổng tiền các đơn :
+                    <span style="font-weight:bold; margin: 0 10px">{{
+                      totalMoney.toString()
+                    }}</span>
+                    đ
                   </div>
                 </div>
               </section>
@@ -212,19 +201,19 @@
             </div>
           </a-tab-pane>
 
+          <!-- tab 4  -->
           <a-tab-pane id="tab-4" key="4" tab="Giao hoàn thành">
             <div v-if="!!dataComplete.length">
-              <div class="order-status__title">
+              <div class="order-status__title order-status__title-all">
                 <p class="font-16px">Mã đơn hàng</p>
                 <p class="font-16px">Ngày đặt hàng</p>
                 <p class="font-16px">Tổng tiền</p>
                 <p class="font-16px">Trạng thái đơn hàng</p>
-                <p class="font-16px">Thông tin đơn hàng</p>
-                <p class="font-16px">Xác nhận</p>
+                <p class="font-16px">Tên người đặt</p>
               </div>
               <section class="bg-white cart-user">
                 <div
-                  class="cart-content pr-0"
+                  class="cart-content cart-content-all pr-0"
                   v-for="invoice in dataComplete"
                   :key="invoice._id"
                 >
@@ -236,35 +225,31 @@
                   </div>
                   <div class="cart-content__payment">
                     <p class="txt-origin font-16px font-weight-bold">
-                      {{ invoice.money | numberWithCommas }} đ
+                      {{ invoice.money | numberWithCommas }}đ
+                    </p>
+                  </div>
+                  <div class="cart-content__delivery">
+                    <p class="font-18px txt-red font-weight-bold">
+                      {{ handleStatus(invoice) }}
                     </p>
                   </div>
                   <div>
-                    <a-button type="yellow">
-                      <nuxt-link
-                        :to="{ path: '/checkout/payment/', hash: 'info' }"
-                      >
-                        Thông tin đơn hàng
-                      </nuxt-link>
-                    </a-button>
+                    <div class="txt-primary" style="color:#007bff">
+                      {{ invoice.name }}
+                    </div>
                   </div>
-                  <div>
-                    <a-button
-                      type="primary"
-                      @click="
-                        handleConfirm(invoice._id, invoice.owner, 'complete')
-                      "
-                      >Xác nhận</a-button
-                    >
-                  </div>
-                  <div>
-                    <a-button
-                      type="danger"
-                      @click="
-                        handleConfirm(invoice._id, invoice.owner, 'cancel')
-                      "
-                      >Hủy đơn hàng</a-button
-                    >
+                </div>
+                <div
+                  style="display:flex; justify-content:flex-end;padding: 0 10px;border-radius: 5px; height:32px; margin:10px 20px"
+                >
+                  <div
+                    style="border: 1px solid #007bff;display: flex;align-items: center; padding:10px 20px"
+                  >
+                    Tổng tiền các đơn :
+                    <span style="font-weight:bold; margin: 0 10px">{{
+                      totalMoney.toString()
+                    }}</span>
+                    đ
                   </div>
                 </div>
               </section>
@@ -274,20 +259,19 @@
               <p class="my-3">Chưa có đơn hàng trong giỏ hàng của bạn.</p>
             </div>
           </a-tab-pane>
-
+          <!-- tab 5  -->
           <a-tab-pane id="tab-5" key="5" tab="Hoàn thành">
             <div v-if="!!dataComplete1.length">
-              <div class="order-status__title">
+              <div class="order-status__title order-status__title-all">
                 <p class="font-16px">Mã đơn hàng</p>
                 <p class="font-16px">Ngày đặt hàng</p>
                 <p class="font-16px">Tổng tiền</p>
                 <p class="font-16px">Trạng thái đơn hàng</p>
-                <p class="font-16px">Thông tin đơn hàng</p>
-                <p class="font-16px">Xác nhận</p>
+                <p class="font-16px">Tên người đặt</p>
               </div>
               <section class="bg-white cart-user">
                 <div
-                  class="cart-content pr-0"
+                  class="cart-content cart-content-all pr-0"
                   v-for="invoice in dataComplete1"
                   :key="invoice._id"
                 >
@@ -299,23 +283,31 @@
                   </div>
                   <div class="cart-content__payment">
                     <p class="txt-origin font-16px font-weight-bold">
-                      {{ invoice.money | numberWithCommas }} đ
+                      {{ invoice.money | numberWithCommas }}đ
+                    </p>
+                  </div>
+                  <div class="cart-content__delivery">
+                    <p class="font-18px txt-red font-weight-bold">
+                      {{ handleStatus(invoice) }}
                     </p>
                   </div>
                   <div>
-                    <a-button type="yellow">
-                      <nuxt-link
-                        :to="{ path: '/checkout/payment/', hash: 'info' }"
-                      >
-                        Thông tin đơn hàng
-                      </nuxt-link>
-                    </a-button>
+                    <div class="txt-primary" style="color:#007bff">
+                      {{ invoice.name }}
+                    </div>
                   </div>
-                  <div>
-                    <a-button type="primary" disabled>Xác nhận</a-button>
-                  </div>
-                  <div>
-                    <a-button type="danger" disabled>Hủy đơn hàng</a-button>
+                </div>
+                <div
+                  style="display:flex; justify-content:flex-end;padding: 0 10px;border-radius: 5px; height:32px; margin:10px 20px"
+                >
+                  <div
+                    style="border: 1px solid #007bff;display: flex;align-items: center; padding:10px 20px"
+                  >
+                    Tổng tiền các đơn :
+                    <span style="font-weight:bold; margin: 0 10px">{{
+                      totalMoney.toString()
+                    }}</span>
+                    đ
                   </div>
                 </div>
               </section>
@@ -326,19 +318,20 @@
             </div>
           </a-tab-pane>
 
-          <a-tab-pane id="tab-5" key="6" tab="Đã hủy">
+          <!-- tab 6 -->
+
+          <a-tab-pane id="tab-6" key="6" tab="Đã hủy">
             <div v-if="!!dataCancel.length">
-              <div class="order-status__title">
+              <div class="order-status__title order-status__title-all">
                 <p class="font-16px">Mã đơn hàng</p>
                 <p class="font-16px">Ngày đặt hàng</p>
                 <p class="font-16px">Tổng tiền</p>
                 <p class="font-16px">Trạng thái đơn hàng</p>
-                <p class="font-16px">Thông tin đơn hàng</p>
-                <p class="font-16px">Xác nhận</p>
+                <p class="font-16px">Tên người đặt</p>
               </div>
               <section class="bg-white cart-user">
                 <div
-                  class="cart-content pr-0"
+                  class="cart-content cart-content-all pr-0"
                   v-for="invoice in dataCancel"
                   :key="invoice._id"
                 >
@@ -350,23 +343,31 @@
                   </div>
                   <div class="cart-content__payment">
                     <p class="txt-origin font-16px font-weight-bold">
-                      {{ invoice.money | numberWithCommas }} đ
+                      {{ invoice.money | numberWithCommas }}đ
+                    </p>
+                  </div>
+                  <div class="cart-content__delivery">
+                    <p class="font-18px txt-red font-weight-bold">
+                      {{ handleStatus(invoice) }}
                     </p>
                   </div>
                   <div>
-                    <a-button type="yellow">
-                      <nuxt-link
-                        :to="{ path: '/checkout/payment/', hash: 'info' }"
-                      >
-                        Thông tin đơn hàng
-                      </nuxt-link>
-                    </a-button>
+                    <div class="txt-primary" style="color:#007bff">
+                      {{ invoice.name }}
+                    </div>
                   </div>
-                  <div>
-                    <a-button type="primary" disabled>Xác nhận</a-button>
-                  </div>
-                  <div>
-                    <a-button type="danger" disabled>Hủy đơn hàng</a-button>
+                </div>
+                <div
+                  style="display:flex; justify-content:flex-end;padding: 0 10px;border-radius: 5px; height:32px; margin:10px 20px"
+                >
+                  <div
+                    style="border: 1px solid #007bff;display: flex;align-items: center; padding:10px 20px"
+                  >
+                    Tổng tiền các đơn :
+                    <span style="font-weight:bold; margin: 0 10px">{{
+                      totalMoney.toString()
+                    }}</span>
+                    đ
                   </div>
                 </div>
               </section>
@@ -571,7 +572,7 @@ export default {
       window.print();
       document.body.innerHTML = this.HTML;
       // window.location.reload();
-      this.$router.go(this.$router.currentRoute)
+      this.$router.go(this.$router.currentRoute);
     },
     handleStatus(invoice) {
       if (_.isEmpty(invoice.invoiceDetail)) {

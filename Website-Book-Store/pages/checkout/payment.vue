@@ -414,7 +414,7 @@ export default {
       //   this.totalCoupon = 0;
       // }
       this.totalFreeship = 30000;
-      this.totalCoupon = voucher.coin;
+      this.totalCoupon = voucher.discount;
       this.totalMoney =
         this.totalMoneyBook + this.totalFreeship - this.totalCoupon;
     },

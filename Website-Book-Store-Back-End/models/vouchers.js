@@ -20,6 +20,9 @@ const voucherSchema = new Schema({
   coin: {
     type: Number,
   },
+  discount: {
+    type: Number,
+  },
   quantity: { type: Number, default: 1 },
 });
 

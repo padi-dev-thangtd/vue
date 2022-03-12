@@ -101,7 +101,7 @@
               </div>
             </nuxt-link>
           </a-sub-menu>
-          <a-sub-menu
+          <!-- <a-sub-menu
             key="5"
             :class="
               setMenuActive(URL_MENU.ORDER_HISTORY, path)
@@ -119,7 +119,7 @@
                 <span>Order history</span>
               </div>
             </nuxt-link>
-          </a-sub-menu>
+          </a-sub-menu> -->
            <a-sub-menu
             key="6"
             :class="

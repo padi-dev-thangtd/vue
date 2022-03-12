@@ -4,7 +4,9 @@
       <a-breadcrumb-item class="font-16px cursor-pointer">
         <span @click="$router.push('/admin/products')">Vouchers</span>
       </a-breadcrumb-item>
-      <a-breadcrumb-item class="font-16px text-underline cursor-pointer">Add</a-breadcrumb-item>
+      <a-breadcrumb-item class="font-16px text-underline cursor-pointer"
+        >Add</a-breadcrumb-item
+      >
     </a-breadcrumb>
     <div>
       <div class="font-24px text-center mb-3">Add voucher</div>
@@ -15,7 +17,11 @@
         :label-col="labelCol"
         :wrapper-col="wrapperCol"
       >
-        <a-form-model-item ref="nameVoucher" label="Tên voucher" prop="nameVoucher">
+        <a-form-model-item
+          ref="nameVoucher"
+          label="Tên voucher"
+          prop="nameVoucher"
+        >
           <a-input v-model="form.nameVoucher" />
         </a-form-model-item>
 
@@ -32,7 +38,19 @@
           <a-input v-model="form.apply" />
         </a-form-model-item>
 
-        <a-form-model-item ref="quantity" label="Số lượng voucher" prop="quantity">
+        <a-form-model-item
+          ref="discount"
+          label="Số tiền giảm giá"
+          prop="discount"
+        >
+          <a-input v-model="form.discount" />
+        </a-form-model-item>
+
+        <a-form-model-item
+          ref="quantity"
+          label="Số lượng voucher"
+          prop="quantity"
+        >
           <a-input v-model="form.quantity" />
         </a-form-model-item>
 
@@ -41,7 +59,10 @@
         </a-form-model-item>
 
         <a-form-model-item ref="logo" label="Logo" prop="logo">
-          <a-select v-model="form.logo" placeholder="Chọn màu logo của voucher !">
+          <a-select
+            v-model="form.logo"
+            placeholder="Chọn màu logo của voucher !"
+          >
             <a-select-option value="red">red</a-select-option>
             <a-select-option value="green">green</a-select-option>
             <a-select-option value="blue">blue</a-select-option>
@@ -61,36 +82,80 @@
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
-import moment from 'moment';
+import { mapActions } from "vuex";
+import moment from "moment";
 export default {
-  layout: 'admin',
+  layout: "admin",
   data() {
     return {
       labelCol: { span: 6 },
       wrapperCol: { span: 12 },
-      other: '',
+      other: "",
       form: {
-        nameVoucher: '',
+        nameVoucher: "",
         logo: undefined,
-        baseDate: '',
-        apply: '',
+        baseDate: "",
+        apply: "",
         coin: null,
-        quantity:null,
+        quantity: null,
+        discount: null
       },
       rules: {
-        nameVoucher: [{ required: true, message: 'Vui lòng nhập tên Voucher ...', trigger: 'blur' },],
-        logo: [{ required: true, message: 'Vui lòng nhập tên Tác giả ...', trigger: 'blur' }],
-        baseDate: [{ required: true, message: 'Vui lòng nhập đường dẫn ảnh ...', trigger: 'blur' }],
-        apply: [{ required: true, message: 'Vui lòng nhập Giá sách ...', trigger: 'blur' }],
-        coin: [{ required: true, message: 'Vui lòng nhập Thể loại ...', trigger: 'blur' }],
-        quantity: [{ required: true, message: 'Vui lòng nhập số lượng voucher ...', trigger: 'blur' }],
-      },
+        nameVoucher: [
+          {
+            required: true,
+            message: "Vui lòng nhập tên Voucher ...",
+            trigger: "blur"
+          }
+        ],
+        logo: [
+          {
+            required: true,
+            message: "Vui lòng nhập tên Tác giả ...",
+            trigger: "blur"
+          }
+        ],
+        baseDate: [
+          {
+            required: true,
+            message: "Vui lòng nhập đường dẫn ảnh ...",
+            trigger: "blur"
+          }
+        ],
+        apply: [
+          {
+            required: true,
+            message: "Vui lòng nhập Giá sách ...",
+            trigger: "blur"
+          }
+        ],
+        coin: [
+          {
+            required: true,
+            message: "Vui lòng nhập Thể loại ...",
+            trigger: "blur"
+          }
+        ],
+        quantity: [
+          {
+            required: true,
+            message: "Vui lòng nhập số lượng voucher ...",
+            trigger: "blur"
+          }
+        ],
+        discount: [
+          {
+            required: true,
+            message: "Vui lòng nhập số tiền giảm giá  ...",
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
   methods: {
     ...mapActions({
-      addListVoucher: 'vouchers/addListVoucher',
+      addListVoucher: "vouchers/addListVoucher"
     }),
 
     onSubmit() {
@@ -98,19 +163,19 @@ export default {
         if (valid) {
           let dataVoucher = {
             ...this.form,
-            baseDate: moment(this.form.baseDate).format('YYYY-MM-DD'),
-          }
+            baseDate: moment(this.form.baseDate).format("YYYY-MM-DD")
+          };
           await this.addListVoucher(dataVoucher);
-          this.$router.push('/admin/vouchers/');
+          this.$router.push("/admin/vouchers/");
         } else {
-          console.log('error submit!!');
+          console.log("error submit!!");
           return false;
         }
       });
     },
     resetForm() {
       this.$refs.ruleForm.resetFields();
-    },
-  },
+    }
+  }
 };
 </script>
