@@ -39,7 +39,7 @@
         </div>
         <div class="product-view__detail">
           <div class="product-view__detail-name mb-3">
-            Cân Bằng Cảm Xúc, Cả Lúc Bão Giông
+            {{ productInfo ? productInfo.name : "" }}
           </div>
           <div class="product-view__detail-page mb-2">
             <p>Xuất xứ: <span class="font-weight-bold">Việt Nam</span></p>
